@@ -24,6 +24,7 @@
           <%= link_to 'サイト説明', '#' %>
           <%= link_to 'サインアップ', new_user_registration_path %>
           <%= link_to 'ログイン', new_user_session_path %>
+          <%= link_to 'テストログイン', users_guest_sign_in_path, method: :post %>
         <% end %>
       </nav>
     </header>
