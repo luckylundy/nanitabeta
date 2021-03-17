@@ -10,6 +10,27 @@
   </head>
 
   <body>
+    <header>
+      <nav>
+        <%= link_to 'TOPイメージ', root_path %>
+        <% if user_signed_in? %>
+          <strong><%# link_to current_user.username, pages_show_path %></strong>
+          <%= link_to 'プロフィール変更', edit_user_registration_path %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <%= link_to 'タグ', '#' %>
+          <%= link_to 'ユーザー', '#' %>
+          <%= link_to '写真', '#' %>
+        <% else %>
+          <%= link_to 'サイト説明', '#' %>
+          <%= link_to 'サインアップ', new_user_registration_path %>
+          <%= link_to 'ログイン', new_user_session_path %>
+          <%= link_to 'テストログイン', users_guest_sign_in_path, method: :post %>
+        <% end %>
+      </nav>
+    </header>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
     <%= yield %>
   </body>
 </html>

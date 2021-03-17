@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users
+  root 'pages#index'
+  get 'pages/show'
+
+  devise_scope :user do
+    post 'users/guest_sign_in', to: 'users/guest_sessions#new_guest'
+  end
 end
