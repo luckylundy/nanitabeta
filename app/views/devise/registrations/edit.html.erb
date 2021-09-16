@@ -13,7 +13,35 @@
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
-  
+  <div class="field">
+    <%= f.label :portrait %><br/>
+    <%= f.file_field :portrait, id: :user_portrait %>
+    <% if current_user.portrait? %>
+      <%= image_tag current_user.portrait.to_s, id: :img_prev %>
+    <% else %>
+      <%= image_tag "default.jpeg", id: :img_prev %>
+    <% end %>
+    <script type="text/javascript">
+      $(function() {
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+        $('#img_prev').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $("#user_portrait").change(function(){
+            readURL(this);
+        });
+      });
+    </script>
+  </div>
+  <label>
+    <%= f.check_box :remove_portrait %>
+    画像を削除する
+  </label>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>

@@ -1,36 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Nanitabeta</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <header>
-      <nav>
-        <%= link_to 'TOPイメージ', root_path %>
-        <% if user_signed_in? %>
-          <strong><%# link_to current_user.username, pages_show_path %></strong>
-          <%= link_to 'プロフィール変更', edit_user_registration_path %>
-          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-          <%= link_to 'タグ', '#' %>
-          <%= link_to 'ユーザー', '#' %>
-          <%= link_to '写真', '#' %>
-        <% else %>
-          <%= link_to 'サイト説明', '#' %>
-          <%= link_to 'サインアップ', new_user_registration_path %>
-          <%= link_to 'ログイン', new_user_session_path %>
-          <%= link_to 'テストログイン', users_guest_sign_in_path, method: :post %>
-        <% end %>
-      </nav>
-    </header>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render 'layouts/header' %>
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-#{message-type} text-center mb-0 pt-1 rounded-0">
+        <%= message %>
+      </div>
+    <% end %>
 
-    <%= yield %>
+    <%= yield %> <!-- 他のページを表示する -->
+    <%= render "layouts/footer" %>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"></script>
   </body>
 </html>

@@ -2,9 +2,13 @@
 
 <ul class="users">
   <% @users.each do |user| %>
-    <li>
-      <p><%= user.portrait %></p>
+    <div>
+      <% if user.portrait? %>
+        <%= image_tag user.portrait.to_s, size: "120x120" %><!-- <%= image_tag "#{user.portrait}", size: "120x120" %> <img src="<%= user.portrait %>"> -->
+      <% else %>
+        <%= image_tag "default.jpeg", size: "120x120" %>
+      <% end %>
       <p><%=link_to user.name, user %></p>
-    </li>
+    </div>
   <% end %>
 </ul>

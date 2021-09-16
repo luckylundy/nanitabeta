@@ -1,2 +1,23 @@
-<h1>こんにちは、<%= current_user.name %>さん</h1>
-<p>ユーザー用ページです。</p>
+<div class="explanation-container">
+  <div class="explanation-bgcolor">
+    <h1 class="text-center explanation-title">あのとき、なに食べた？とは…</h1>
+
+    <div class="explanation-text">
+      <h3 class="mt-2">半クローズドな環境で利用できる食事の写真投稿サイトです。</h3><br/>
+      <h3 class="mt-3">WEB上にありながら他の写真投稿型サイトよりも少しだけ「個人」を意識して作られています。</h3><br/>
+      <h3 class="mt-3">日記として自分一人のために使うもよし、他のユーザーとゆる～くつながるもよし。</h3><br/>
+      <h3 class="mt-3">使い方はあなた次第。まずは写真を投稿してみませんか？</h3>
+    </div>
+
+    <div class="explanation-buttons">
+      <div class="explanation-button mb-3">
+        <p class="mb-0">まだユーザー登録されていない場合</p>
+        <%= link_to "登録する", new_user_registration_path, class: "btn btn-lg btn-primary" %>
+      </div>
+      <div class="explanation-button">
+        <p class="mb-0">すでに当サイトに登録されている場合</p>
+        <%= link_to "ログインする", new_user_session_path, class: "btn btn-lg btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>

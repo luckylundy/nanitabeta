@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
+
+  mount_uploader :portrait, PortraitUploader
+                  # カラム名 # Uploader名
   
   def self.guest
     find_or_create_by!(email: "guest@gmail.com") do |user|

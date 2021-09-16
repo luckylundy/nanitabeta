@@ -57,3 +57,7 @@ gem 'dotenv-rails'
 
 # Devise
 gem 'devise'
+
+# Image upload and processing
+gem 'carrierwave'
+gem 'mini_magick'

@@ -1,0 +1,88 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+.button-primary {
+  background-color: #4682b4;
+  border-color: #4682b4;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.navbar {
+  height: 50px;
+  width: 100%;
+}
+
+.box {
+  position: relative;
+  .box-left {
+    position: absolute;
+    left: 0;
+  }
+  .box-right {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.page-index-container {
+  background-image: image-url("top.jpeg");
+  background-size: cover;
+  min-width: 100vw;
+  min-height: 80vh;
+}
+
+
+/* 説明ページ（pages/show） */
+
+.explanation-container {
+  background-image: image-url("background-ramen.jpeg");
+  background-size: cover;
+  min-width: 100vw;
+  min-height: 150vh;
+  text-align: center;
+}
+
+.explanation-bgcolor {
+  min-width: 100vw;
+  min-height: 150vh;
+  background-color: rgba(0,0,0,0.2);
+}
+
+.explanation-title {
+  padding: 150px 0 100px;
+  color: #fff;
+}
+
+.explanation-text {
+  margin: 70px 0;
+  text-align: left;
+  display: inline-block;
+  color: #fff;
+}
+
+.explanation-button {
+  .button-primary {
+    background-color: #4682b4;
+  }
+}
+
+.explanation-button p {
+  color: rgba(255,255,255,0.7);
+}
