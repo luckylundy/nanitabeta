@@ -1,14 +1,20 @@
-<h1>ユーザー一覧</h1>
-
-<ul class="users">
-  <% @users.each do |user| %>
-    <div>
-      <% if user.portrait? %>
-        <%= image_tag user.portrait.to_s, size: "120x120" %><!-- <%= image_tag "#{user.portrait}", size: "120x120" %> <img src="<%= user.portrait %>"> -->
-      <% else %>
-        <%= image_tag "default.jpeg", size: "120x120" %>
-      <% end %>
-      <p><%=link_to user.name, user %></p>
-    </div>
-  <% end %>
-</ul>
+<div class="container">
+  <h1 class="text-center">ユーザー一覧</h1>
+  <div class="row">
+    <% @users.each do |user| %>
+      <div class="col-6 card">
+        <div class="card-body">
+          <% if user.portrait? %>
+            <%= image_tag user.portrait.to_s, size: "120x120" %><!-- <%= image_tag "#{user.portrait}", size: "120x120" %> <img src="<%= user.portrait %>"> -->
+          <% else %>
+            <%= image_tag "default.jpeg", size: "120x120" %>
+          <% end %>
+          <p><%=link_to user.name, user %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="pagination mt-3">
+    <%= paginate @users %>
+  </div>
+</div>

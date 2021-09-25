@@ -1,4 +1,7 @@
 Rails.application.routes.draw do 
+  
+  resources :microposts # 投稿に関するページ
+
   devise_for :users 
   root 'pages#index' # homeページ
   get 'explanation' => 'pages#show' # サイト説明ページ

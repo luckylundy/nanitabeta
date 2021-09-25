@@ -1,0 +1,6 @@
+<div class="container">
+  <% @microposts.each do |micropost| %>
+    <%= image_tag "#{micropost.photo.to_s}" %>
+    <%= micropost.detail %>
+  <% end %>
+</div>

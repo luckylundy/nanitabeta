@@ -48,6 +48,26 @@ body {
   min-height: 80vh;
 }
 
+/* ページネーション（pagination） */
+
+.pagination {
+  justify-content: center;
+}
+
+.pagination>li>a {          
+  border: none;     /*枠線をなくす*/
+  color: #696969;   /*文字の色を変える*/
+}
+
+.pagination>.active>a {     
+  background: #93c9ff !important;   /*背景の色を変える*/
+  border-radius: 15px;     /*角を丸くする*/
+}
+
+.pagination>li>a:hover {        
+  border-radius: 15px;    /*角を丸くする*/
+}
+
 
 /* 説明ページ（pages/show） */
 
