@@ -3,7 +3,7 @@ class Users::GuestSessionsController < Devise::SessionsController
     user = User.guest
     # sign_inはdeviseのログインメソッド
     sign_in user
-    # pages#indexに飛ぶ
-    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+    # microposts#indexに遷移
+    redirect_to microposts_path, notice: 'ゲストユーザーとしてログインしました。'
   end
 end

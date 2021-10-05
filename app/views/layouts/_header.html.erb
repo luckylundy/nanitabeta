@@ -13,7 +13,10 @@
             <%= link_to 'ユーザー', users_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to '写真', '#', class: "nav-link" %>
+            <%= link_to '写真', microposts_path , class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "新規投稿", new_micropost_path, class: "nav-link" %>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

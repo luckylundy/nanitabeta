@@ -68,3 +68,6 @@ gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'mast
 
 # For pagination creation
 gem 'kaminari'
+
+# For tagging microposts
+gem 'acts-as-taggable-on', '~> 8.0'
