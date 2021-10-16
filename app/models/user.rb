@@ -5,6 +5,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
 
+  has_many :microposts, dependent: :destroy # ユーザーは複数の投稿を所有する
+  has_many :comments, dependent: :destroy
+
+  # validates :content, {presence: true}, {length: {maximum: 300}}
+  # if文を使えばエラーを出さずにバリデーションできそう。 if @comment.any? みたいな感じで
+
   mount_uploader :portrait, PortraitUploader
                   # カラム名 # Uploader名
   
@@ -15,4 +21,5 @@ class User < ApplicationRecord
       user.confirmed_at = Time.now
     end
   end
+
 end

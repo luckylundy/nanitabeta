@@ -1,6 +1,8 @@
 Rails.application.routes.draw do 
   
-  resources :microposts # 投稿に関するページ
+  resources :microposts do # 投稿に関するページ
+    resources :comments, only: [:create, :destroy]
+  end
 
   devise_for :users 
   root 'pages#index' # homeページ

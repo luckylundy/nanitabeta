@@ -77,6 +77,57 @@ body {
 }
 
 
+/* 写真（photo） */
+
+.photo {
+  text-align: center;
+}
+
+.photo>p {
+  margin-bottom: 0;
+}
+
+
+/* 文字列（String） */
+
+.arranged-text {
+  text-align: center;
+}
+
+.arranged-text>p {
+  display: inline-block;
+  text-align: left;
+  width: 500px;
+  border: dotted 1px;
+  border-top: none;
+  border-color: black;
+}
+
+
+/* タグ（tag[microposts/show]） */
+
+.post-show-tag {
+  padding-left: 285px;
+}
+
+
+/* アラートメッセージ（alerts） */
+
+.alert-size {
+  height: 30px;
+}
+
+
+/* エラーメッセージ（errors） */
+
+.form-errors {
+  color: red;
+  border: thick double red;
+  border-radius: 5px;
+  padding: 12px 20px;
+  margin-bottom: 16px;
+}
+
 
 /* 説明ページ（pages/show） */
 
