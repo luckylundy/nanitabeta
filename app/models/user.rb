@@ -8,8 +8,8 @@ class User < ApplicationRecord
   has_many :microposts, dependent: :destroy # ユーザーは複数の投稿を所有する
   has_many :comments, dependent: :destroy
 
-  # validates :content, {presence: true}, {length: {maximum: 300}}
-  # if文を使えばエラーを出さずにバリデーションできそう。 if @comment.any? みたいな感じで
+  validates :name, {presence: true, length: {maximum: 50}}
+  validates :email, {presence: true}
 
   mount_uploader :portrait, PortraitUploader
                   # カラム名 # Uploader名

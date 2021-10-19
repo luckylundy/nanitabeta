@@ -3,14 +3,15 @@ class CommentsController < ApplicationController
   before_action :set_micropost
 
   def create
+    @comments = @micropost.comments
     @comment = @micropost.comments.new(comment_params)
     @comment.user = current_user
-    unless @comment.nil?
-      @comment.save
+    if @comment.save
+      # @comment.save
       flash[:primary] = "コメントしました"
-      redirect_to micropost_path(@micropost)
+      redirect_to @micropost
     else
-      flash.now[:danger] = "コメントに失敗しました"
+      flash.now[:danger] = "コメントを入力してください"
       render("microposts/show")
     end
   end

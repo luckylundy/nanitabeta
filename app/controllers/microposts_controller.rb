@@ -23,7 +23,7 @@ class MicropostsController < ApplicationController
 
   def show
     @micropost = Micropost.find_by(id: params[:id])
-    @comments = @micropost.comments
+    @comments = @micropost.comments.order(created_at: :desc)
     @comment = Comment.new # コメントフォームのインスタンスはmicropost/showで作成
   end
 
