@@ -4,10 +4,9 @@ class CommentsController < ApplicationController
 
   def create
     @comments = @micropost.comments
-    @comment = @micropost.comments.new(comment_params)
+    @comment = Comment.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      # @comment.save
       flash[:primary] = "コメントしました"
       redirect_to @micropost
     else

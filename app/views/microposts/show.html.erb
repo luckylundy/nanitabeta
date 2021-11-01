@@ -11,6 +11,9 @@
         <div class="arranged-text">
           <%= simple_format(h(@micropost.detail)) %>
         </div>
+        <div class="good-btn " id="like_<%= @micropost.id %>">
+          <%= render "likes/like", micropost: @micropost %>
+        </div>
         <div class="post-show-tag my-1">
           <% @micropost.tag_list.each do |tag| %>
             <span class="badge badge-pill badge-info mr-2 mb-3 p-2"><%= tag %></span>
@@ -36,27 +39,25 @@
           <h3 class="text-muted mb-0">コメント</h3>
         </div>
         <% @comments.each do |c| %>
-          <%# if c.content.present? %>
+          <div class="d-flex">
             <div class="d-flex">
-              <div class="d-flex">
-                <%= link_to user_path(c.user) do %>
-                    <%= image_tag c.user.portrait.to_s, size: "40x40" %>
-                <% end %>
-              </div>
-              <div class="d-flex flex-column">
-                <small class="text-muted"><%= c.user.name %></small>
-                <div>
-                  <small><%= simple_format(h(c.content)) %></small>
-                </div>
+              <%= link_to user_path(c.user) do %>
+                  <%= image_tag c.user.portrait.to_s, size: "40x40" %>
+              <% end %>
+            </div>
+            <div class="d-flex flex-column">
+              <small class="text-muted"><%= c.user.name %></small>
+              <div>
+                <small><%= simple_format(h(c.content)) %></small>
               </div>
             </div>
-            <div class="d-flex flex-row mb-3 border-bottom border-dark">
-              <div class="d-flex align-items-center">
-                <small><%= Date.parse(c.created_at.to_s).strftime("%m月%d日") %></small>
-              </div>
-              <%= link_to "削除", micropost_comment_path(@micropost, c), method: :delete, data: {confirm: "コメントを削除しますか？"}, class: "btn btn-sm btn-light ml-2" %>
+          </div>
+          <div class="d-flex flex-row mb-3 border-bottom border-dark">
+            <div class="d-flex align-items-center">
+              <small><%= Date.parse(c.created_at.to_s).strftime("%m月%d日") %></small>
             </div>
-          <%# end %>
+            <%= link_to "削除", micropost_comment_path(@micropost, c), method: :delete, data: {confirm: "コメントを削除しますか？"}, class: "btn btn-sm btn-light ml-2" %>
+          </div>
         <% end %>
       </div>
     </div>

@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :microposts, dependent: :destroy # ユーザーは複数の投稿を所有する
   has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy # ユーザーは複数のいいね！ができる
 
   validates :name, {presence: true, length: {maximum: 50}}
   validates :email, {presence: true}
