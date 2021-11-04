@@ -130,6 +130,18 @@ body {
 }
 
 
+/* フォロースタッツ（follow_stats） */
+
+.stats-left {
+  border-right: 1px solid gray;
+  padding-right: 10px;
+}
+
+.stats-right {
+  padding-left: 10px;
+}
+
+
 /* アラートメッセージ（alerts） */
 
 .alert-size {

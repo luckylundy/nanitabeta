@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   end 
   resources :users, only: [:index, :show] do # ユーザー一覧とユーザー詳細画面用
     member do
-      get :likes
+      get :likes, :followings, :followers
+      resources :relationships, only: [:create, :destroy]
     end
   end
+
 end
