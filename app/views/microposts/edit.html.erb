@@ -1,2 +1,27 @@
-<h1>Microposts#edit</h1>
-<p>Find me in app/views/microposts/edit.html.erb</p>
+<div class="col-sm-6 mx-auto mt-5">
+  <h2 class="text-center">編集</h2>
+  <div class="container w-100">
+    <%= form_with model: @micropost, local: true do |f| %>
+      <%= render "shared/error_messages.html.erb", object: f.object %>
+    
+      <div class="form-group">
+        <%= f.label :photo, "写真", class: "form-label" %><br/>
+        <%= f.file_field :photo, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :detail, "詳細", class: "form-label" %><br/>
+        <%= f.text_area :detail, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :tag_list, "タグ", class: "form-label" %>
+        <%= f.text_field :tag_list, placeholder: "例：夕食 ラーメン(間に空白を入れてください)", class: "form-control" %>
+      </div>
+
+      <div class="text-center">
+        <%= f.submit "編集", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

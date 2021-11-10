@@ -2,38 +2,7 @@
   <div class="row">
     <div class="col-2 pt-5">
       <div class="container text-center">
-        <p class="font-weight-bold">プロフィール</p>
-        <% if @user.portrait? %>
-          <%= link_to @user do %>
-            <%= image_tag user.portrait.to_s, size: "120x120", class: "rounded-circle" %>
-          <% end %>
-        <% else %>
-          <%= link_to @user do %>
-            <%= image_tag "default.jpeg", size: "120x120", class: "rounded-circle" %>
-          <% end %>
-          <h5 class="my-4"><%= @user.name %></h5>
-        <% end %>
-        <div class="d-flex flex-row justify-content-center">
-          <div class="stats-left">
-            <%= @user.followings.count %>
-            <br/>
-            フォロー
-          </div>
-          <div class="stats-right">
-            <%= @user.followers.count %>
-            <br/>
-            フォロワー
-          </div>
-        </div>
-        <div>
-          <% if current_user != @user %>
-            <% if current_user.following?(@user) %>
-              <%= link_to "フォロー解除", relationship_path(@user), method: :delete, class: "btn btn-success" %>
-            <% else %>
-              <%= link_to "フォローする", relationships_path(@user), method: :post, class: "btn btn-success" %>
-            <% end %>
-          <% end %>
-        </div>
+        <%= render "shared/user_info", user: @user %>
       </div>
     </div>
     <div class="col-10 pt-5">

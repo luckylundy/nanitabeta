@@ -23,6 +23,7 @@ class MicropostsController < ApplicationController
 
   def show
     @micropost = Micropost.find_by(id: params[:id])
+    @user = @micropost.user
     @comments = @micropost.comments.order(created_at: :desc)
     @comment = Comment.new # コメントフォームのインスタンスはmicropost/showで作成
   end
@@ -32,7 +33,14 @@ class MicropostsController < ApplicationController
   end
 
   def update
-
+    @micropost = Micropost.find_by(id: params[:id])
+    if @micropost.update_attributes!(micropost_params)# 値を更新する
+      flash[:success] = "投稿を更新しました"
+      redirect_to @micropost
+    else
+      flash.now[:danger] = "入力に誤りがあります"
+      render "microposts/edit"
+    end
   end
 
   def destroy
