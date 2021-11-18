@@ -18,7 +18,7 @@
       <%= f.label :portrait, "ユーザー画像", class: "form-label" %><br/>
       <%= f.file_field :portrait, id: :user_portrait, class: "form-control" %>
       <div class="edit-user-profile">
-        <p>編集前の画像</p>
+        <p>ユーザー画像</p>
         <% if current_user.portrait? %>
           <%= image_tag current_user.portrait.to_s, id: :img_prev %>
         <% else %>
@@ -48,13 +48,22 @@
     </label>
 
     <div class="form-group">
-      <%= f.label :password, class: "form-label" %>
-      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "6文字以上入力してください" %>
+      <%= f.label :password, "変更するパスワード" %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "変更したくない場合は空白のままにしてください" %>
+      <% if @minimum_password_length %>
+        <br />
+        <em><%= @minimum_password_length %> characters minimum</em>
+      <% end %>
     </div>
 
     <div class="form-group">
-      <%= f.label :password_confirmation, "パスワード(確認)", class: "form-label" %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+      <%= f.label :password_confirmation, "変更するパスワード(確認)" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "変更したくない場合は空白のままにしてください" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :current_password %> <i class="text-danger">(更新のため必須)</i><br />
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
     </div>
 
     <div class="actions text-center">

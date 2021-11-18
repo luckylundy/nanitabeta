@@ -10,6 +10,17 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.order(created_at: :desc).page(params[:page]).per(10)
   end
 
+  # def edit
+  #   @user = User.find_by(params[:id])
+  # end
+
+  # def update
+  #   @user = User.find_by(params[:id])
+  #   # アップデートしたユーザー情報を保存する
+  #   # ユーザー詳細ページにリダイレクトする
+  #   # ダメだったらもう一度editページをレンダリングする
+  # end
+
   def likes # ユーザーがお気に入り登録した投稿一覧を表示する
     @user = User.find_by(id: params[:id])
     liked = Like.where(user_id: @user.id).pluck(:micropost_id) # user_idが@user.idのlikeを集め、それらのmicropost_idを取得する
