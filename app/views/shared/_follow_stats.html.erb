@@ -1,0 +1,16 @@
+<div class="d-flex flex-row justify-content-center">
+  <div class="stats-left">
+    <%= link_to followings_user_path(user) do %>
+      <%= user.followings.count %>
+      <br/>
+      フォロー
+    <% end %>
+  </div>
+  <div class="stats-right">
+    <%= link_to followers_user_path(user) do %>
+      <%= user.followers.count %>
+      <br/>
+      フォロワー
+    <% end %>
+  </div>
+</div>

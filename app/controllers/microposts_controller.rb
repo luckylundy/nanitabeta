@@ -1,4 +1,7 @@
 class MicropostsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :correct_user, {only: [:edit, :update, :destroy]}
+
   def index
     @microposts = Micropost.order(created_at: :desc).page(params[:page]).per(10)
   end
@@ -8,36 +11,58 @@ class MicropostsController < ApplicationController
   end
 
   def create
-    @micropost = Micropost.new(micropost_params)
-    if @micropost.photo
-      @micropost.save
+    @micropost = current_user.microposts.new(micropost_params)
+    if @micropost.save
+      flash[:primary] = "投稿が保存されました"
       redirect_to microposts_path
-      flash[:notice] = "投稿が保存されました"
     else
-      render("micropost/new")
-      flash[:alert] = "投稿に失敗しました"
+      flash.now[:danger] = "投稿に失敗しました"
+      render("microposts/new")
     end
   end
 
   def show
     @micropost = Micropost.find_by(id: params[:id])
+    @user = @micropost.user
+    @comments = @micropost.comments.order(created_at: :desc)
+    @comment = Comment.new # コメントフォームのインスタンスはmicropost/showで作成
   end
 
   def edit
+    @micropost = Micropost.find_by(id: params[:id])
   end
 
   def update
-
+    @micropost = Micropost.find_by(id: params[:id])
+    if @micropost.update_attributes!(micropost_params)# 値を更新する
+      flash[:success] = "投稿を更新しました"
+      redirect_to @micropost
+    else
+      flash.now[:danger] = "入力に誤りがあります"
+      render "microposts/edit"
+    end
   end
 
   def destroy
-
+    @micropost = Micropost.find_by(id: params[:id])
+    if @micropost.destroy
+      flash[:danger] = "投稿を削除しました"
+      redirect_to microposts_path
+    end
   end
 
   
   private
 
     def micropost_params
-      params.require(:micropost).permit(:photo, :detail, :tag_list)
+      params.require(:micropost).permit(:photo, :detail, :tag_list).merge(user_id: current_user.id)
+    end
+
+    def correct_user
+      @micropost = Micropost.find_by(id: params[:id])
+      if current_user.id != @micropost.user.id
+        flash[:danger] = "権限がありません"
+        redirect_to microposts_path
+      end
     end
 end

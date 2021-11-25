@@ -5,9 +5,13 @@
       <div class="col-6 card">
         <div class="card-body">
           <% if user.portrait? %>
-            <%= image_tag user.portrait.to_s, size: "120x120" %><!-- <%= image_tag "#{user.portrait}", size: "120x120" %> <img src="<%= user.portrait %>"> -->
+            <%= link_to user do %>
+              <%= image_tag user.portrait.to_s, size: "120x120" %>
+            <% end %>
           <% else %>
-            <%= image_tag "default.jpeg", size: "120x120" %>
+            <%= link_to user do %>
+              <%= image_tag "default.jpeg", size: "120x120" %>
+            <% end %>
           <% end %>
           <p><%=link_to user.name, user %></p>
         </div>

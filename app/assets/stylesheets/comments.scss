@@ -1,0 +1,11 @@
+// Place all the styles related to the Comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.comment-border {
+  border-top: thick double #c0c0c0;
+  border-bottom: thick double #c0c0c0;
+}
+.comment-border>h3 {
+  color: #333333;
+}

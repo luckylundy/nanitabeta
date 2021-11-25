@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2 pt-5">
+      <%= render "shared/user_info", user: @user %>
+    </div>
+    <div class="col-10 pt-5">
+      <div>
+        <ul class="nav nav-tabs justify-content-center mb-2">
+          <li class="nav-item"><%= link_to "投稿", @user , class: "nav-link user-show-tab" %></li>
+          <li><%= link_to "いいね！", likes_user_path(@user), class: "nav-link active user-show-tab" %></li>
+        </ul>
+      </div>
+      <div class="image-display-area">
+        <div class="row justify-content-center">
+          <% @likes.each do |like| %>
+            <div class="col-2 card mx-2 mb-3" style="width: 150px;">
+              <div class="card-img-top d-flex justify-content-center">
+                <%= link_to image_tag("#{like.photo.to_s}", size: "150x150"), like %>
+              </div>
+              <div class="card-body">
+                <div class="card-text">
+                  <%= link_to like.detail.truncate(20, omission: "..."), like, class: "no-decoration" %>
+                </div>
+                <div style="height: 50px;">
+                  <% like.tag_list.each do |tag| %>
+                    <span class="badge badge-pill badge-info p-1"><%= tag %></span>
+                  <% end %>
+                </div>
+              </div>
+              <div class="d-flex align-items-end justify-content-center text-muted">
+                <%= l like.created_at, format: :short %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="mt-3">
+          <%= paginate @likes %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

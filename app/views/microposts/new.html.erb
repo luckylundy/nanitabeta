@@ -2,6 +2,7 @@
   <h2 class="text-center">新規投稿</h2>
   <div class="container w-100">
     <%= form_with model: @micropost, local: true do |f| %>
+      <%= render "shared/error_messages.html.erb", object: f.object %>
     
       <div class="form-group">
         <%= f.label :photo, "写真", class: "form-label" %><br/>

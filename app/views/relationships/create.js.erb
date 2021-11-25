@@ -1,0 +1,2 @@
+$("#follow-button-<%= @user.id %>").html("<%= j(render "unfollow_button", user: @user) %>");
+$("#follow-stats-area").html("<%= j(render "shared/follow_stats", user: @user) %>");

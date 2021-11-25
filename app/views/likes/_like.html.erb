@@ -1,0 +1,11 @@
+<% if !Like.exists?(user_id: current_user.id, micropost_id: micropost.id) %>
+  <%= link_to micropost_likes_path(micropost), method: :post, remote: true, class: "like-btn" do %>
+    <i class="fas fa-star star-icon1"></i>
+  <% end %>
+  <span class="likes-count"><%= micropost.likes.count %></span>
+<% else %>
+  <%= link_to micropost_like_path(micropost, id: micropost.likes[0].id), method: :delete, remote: true, class: "unlike-btn" do %>
+    <i class="fas fa-star star-icon2"></i>
+  <% end %>
+  <span class="likes-count"><%= micropost.likes.count %></span>
+<% end %>

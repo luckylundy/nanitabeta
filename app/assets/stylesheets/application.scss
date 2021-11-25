@@ -77,6 +77,99 @@ body {
 }
 
 
+/* 写真（photo） */
+
+.photo {
+  text-align: center;
+}
+
+.photo>p {
+  margin-bottom: 0;
+}
+
+
+/* 文字列（String） */
+
+.arranged-text {
+  text-align: center;
+}
+
+.arranged-text>p {
+  display: inline-block;
+  text-align: left;
+  width: 500px;
+  border: dotted 1px;
+  border-top: none;
+  border-bottom: none;
+  border-color: black;
+  margin-bottom: 0;
+}
+
+/* お気に入りボタン（likes[microposts/show]） */
+
+.good-btn {
+  border: dotted 1px;
+  border-top: none;
+  width: 500px;
+  text-align: right;
+  margin: 0 auto;
+}
+
+
+/* タグ（tag[microposts/show]） */
+
+.post-show-tag {
+  padding-left: 285px;
+}
+
+
+/* タブ（tabs[users/show]） */
+
+.user-show-tab {
+  font-size: 25px;
+}
+
+
+/* フォロースタッツ（follow_stats） */
+
+.stats-left {
+  border-right: 1px solid gray;
+  padding-right: 10px;
+}
+
+.stats-right {
+  padding-left: 10px;
+}
+
+
+/* 編集時ユーザー画像（edit-user-profile） */
+.edit-user-profile{
+  margin-top: 10px;
+}
+
+.edit-user-profile>p {
+  margin-bottom: 0;
+  padding-left: 15px;
+}
+
+
+/* アラートメッセージ（alerts） */
+
+.alert-size {
+  height: 30px;
+}
+
+
+/* エラーメッセージ（errors） */
+
+.form-errors {
+  color: red;
+  border: thick double red;
+  border-radius: 5px;
+  padding: 12px 20px;
+  margin-bottom: 16px;
+}
+
 
 /* 説明ページ（pages/show） */
 
