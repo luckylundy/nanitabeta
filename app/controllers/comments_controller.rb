@@ -35,12 +35,11 @@ class CommentsController < ApplicationController
     end
 
     def comments_count_must_be_within_limit
-      @user = current_user
       @comment = Comment.new(comment_params)
       @micropost = Micropost.find_by(id: params[:micropost_id])
       @comments = @micropost.comments
       # コメントしようとしているユーザーが投稿者ではない && ユーザーの「特定の投稿」に対するコメントが3回以上であれば
-      if @user != @micropost.user && @user.comments.where(micropost_id: @micropost.id).size >= 3
+      if current_user != @micropost.user && current_user.comments.where(micropost_id: @micropost.id).size >= 3
       # flashを出して元のページにレンダリング
         flash.now[:danger] = "特定の投稿に対するコメントは3回までです"
         render("microposts/show")
