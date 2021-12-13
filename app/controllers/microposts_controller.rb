@@ -3,7 +3,21 @@ class MicropostsController < ApplicationController
   before_action :correct_user, {only: [:edit, :update, :destroy]}
 
   def index
-    @microposts = Micropost.order(created_at: :desc).page(params[:page]).per(10)
+    # もしindexへのpath(microposts_path)にparams[:tag_name]があれば、
+    if params[:tag_name]
+    # params[:tag_name]に基づく投稿を取得・表示(タグ検索ページを表示)
+      @microposts = Micropost.tagged_with(params[:tag_name].to_s).order(created_at: :desc).page(params[:page]).per(10)
+    # よく使われるタグ10選も表示
+      @tag_list = ActsAsTaggableOn::Tag.most_used(10)
+    else
+    # そうでなければ通常の投稿一覧ページを表示
+    # ビューから送られてくる入力データを@qとし、
+      @q = Micropost.ransack(params[:q])
+    # @qに該当するインスタンスを1ページにつき10個表示する
+      @microposts = @q.result(distinct: true).order(created_at: :desc).page(params[:page]).per(10)
+    # もし@qに該当するインスタンスがなかったらflashを表示
+      flash.now[:danger] = "該当する投稿が見つかりませんでした" if @microposts.empty?
+    end
   end
 
   def new

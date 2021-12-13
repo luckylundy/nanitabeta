@@ -2,7 +2,13 @@ class UsersController < ApplicationController
   before_action :sign_in_required
 
   def index
-    @users = User.order(created_at: :desc).page(params[:page]).per(6)
+    @q = User.ransack(params[:q])
+    if params[:all_users]
+      @users = User.order(created_at: :desc).page(params[:page]).per(6)
+    else
+      @users = @q.result(distinct: true).order(created_at: :desc).page(params[:page]).per(6)
+      flash.now[:danger] = "該当するユーザーが見つかりませんでした" if @users.empty?
+    end
   end
 
   def show
