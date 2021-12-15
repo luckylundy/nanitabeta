@@ -9,18 +9,27 @@
   <% end %>
   <div class="row">
     <% @users.each do |user| %>
-      <div class="col-6 card">
-        <div class="card-body">
+      <div class="col-5 card mx-auto mx-2 mb-2">
+        <div class="card-body d-flex flex-row justify-content-center">
           <% if user.portrait? %>
-            <%= link_to user do %>
-              <%= image_tag user.portrait.to_s, size: "120x120" %>
-            <% end %>
+            <div class="mr-5">
+              <%= link_to user do %>
+                <%= image_tag user.portrait.to_s, size: "120x120" %>
+              <% end %>
+            </div>
           <% else %>
-            <%= link_to user do %>
-              <%= image_tag "default.jpeg", size: "120x120" %>
-            <% end %>
+            <div class="mr-5">
+              <%= link_to user do %>
+                <%= image_tag "default.jpeg", size: "120x120" %>
+              <% end %>
+            </div>
           <% end %>
-          <p><%=link_to user.name, user %></p>
+          <div class="d-flex flex-column">
+            <h5 class="ml-4 mb-5"><%=link_to user.name, user %></h5>
+            <div class="ml-4">
+              <%= render "shared/follow_button_form", user: user %>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>
