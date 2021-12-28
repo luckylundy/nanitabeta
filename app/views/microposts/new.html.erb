@@ -19,9 +19,100 @@
         <%= f.text_field :tag_list, placeholder: "例：夕食 ラーメン(間に空白を入れてください)", class: "form-control" %>
       </div>
 
+      <div class="form-group">
+        <%= f.label :address, "場所", class: "form-label" %>
+        <%= f.text_field :address, id: "address", placeholder: "地名、施設名などを入力するか、地図をクリックしてマーカーを立ててください", class: "form-control" %>
+        <div class="d-flex flex-row">
+          <a class="btn btn-success p-0" onclick="codeAddress()">地図検索</a>
+          <div class="ml-auto">
+            <a id="del" class="btn btn-danger p-0" onclick="deleteMarker()">マーカー削除</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="map" style="height: 400px; width: 100%;"></div><%# ここにgoogleマップを表示 %>
+      <%= f.hidden_field :latitude %>
+      <%= f.hidden_field :longitude %>
+
       <div class="text-center">
         <%= f.submit "投稿", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
 </div>
+
+<script>
+  var marker
+  var map_lat
+  var map_lng
+  var map_result
+  var myLatLng
+  let map
+  let geocoder
+
+  function initMap(){
+    geocoder = new google.maps.Geocoder()
+    if(document.getElementById('map')){ //新規投稿で表示する地図
+      myLatLng = {lat: 35.676192, lng: 139.650311}
+      map_lat = document.getElementById('micropost_latitude')
+      map_lng = document.getElementById('micropost_longitude')
+
+      map = new google.maps.Map(document.getElementById('map'),{
+        center: myLatLng,
+        zoom: 15,
+      });
+      marker = new google.maps.Marker();
+
+  google.maps.event.addListener(map, 'click', mylistener); //地図クリック時の処理実行
+
+  function mylistener(event){ //地図クリック時の処理内容
+    marker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
+    marker.setMap(map);
+    console.log(event.latLng.lat(), event.latLng.lng());
+    map_lat.value = event.latLng.lat(); //クリックした場所の緯度をデータベース保存用の値にする
+    map_lng.value = event.latLng.lng(); //クリックした場所の経度をデータベース保存用の値にする
+  }
+
+    }else{ //投稿詳細で表示する地図
+      myLatLng = {lat: gon.lat, lng: gon.lng} //データベースの緯度・経度
+      map = new google.maps.Map(document.getElementById('show_map'),{
+        center: myLatLng,
+        zoom: 15,
+      });
+      marker = new google.maps.Marker({ //マーカーを表示するのみ
+        position: myLatLng, //データベースの緯度・経度
+        map: map
+      });
+    }
+  }
+
+  function deleteMarker(){ //マーカー削除
+    marker.setMap(null);
+    map_lat.value = "";
+    map_lng.value = "";
+  }
+
+  function codeAddress(){
+    geocoder = new google.maps.Geocoder()
+    let inputAddress = document.getElementById('address').value;
+    geocoder.geocode({
+      'address': inputAddress,
+      'region': 'jp'
+    }, function(results, status){
+      if (status == 'OK'){
+        map.setCenter(results[0].geometry.location); //クリックした場所を中心にする
+        map_result = results[0].geometry.location;
+        map_lat.value = map_result.lat();
+        map_lng.value = map_result.lng();
+        marker.setPosition(new google.maps.LatLng(map_result.lat(), map_result.lng()));
+        marker.setMap(map);
+        console.log(map_lat.value, map_lng.value);
+      }else{
+        alert('該当する結果がありませんでした');
+        initMap();
+      }
+    });
+  }
+</script>
+
+

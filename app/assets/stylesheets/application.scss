@@ -88,13 +88,26 @@ body {
 }
 
 
+/* グーグルマップ（google-maps） */
+
+.show-map-location {
+  text-align: center;
+  margin: 0 auto;
+}
+
+
+/* 住所（address） */
+
+
+
+
 /* 文字列（String） */
 
 .arranged-text {
   text-align: center;
 }
 
-.arranged-text>p {
+.photo-text {
   display: inline-block;
   text-align: left;
   width: 500px;
@@ -104,6 +117,13 @@ body {
   border-color: black;
   margin-bottom: 0;
 }
+
+.adress-text {
+  display: inline-block;
+  text-align: left;
+  width: 500px;
+}
+
 
 /* お気に入りボタン（likes[microposts/show]） */
 

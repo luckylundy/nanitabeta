@@ -6,7 +6,8 @@ class Micropost < ApplicationRecord
   validates :user_id, {presence: true}
   validates :photo, {presence: true}
 
-
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
 
   acts_as_taggable_on :tags # Micropostモデルとtag_listを関連付け
   mount_uploader :photo, PhotoUploader

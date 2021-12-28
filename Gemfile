@@ -77,3 +77,8 @@ gem 'acts-as-taggable-on', '~> 8.0'
 
 # For tag search
 gem 'ransack', github: 'activerecord-hackery/ransack'
+
+# For Google map implementation
+gem 'gmaps4rails'
+gem 'geocoder'
+gem 'gon'
