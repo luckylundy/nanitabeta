@@ -8,11 +8,9 @@
         <div class="photo" >
           <p><%= image_tag "#{@micropost.photo.to_s}", size: "500x500" %></p>
         </div>
-        <% if @micropost.detail %>
-          <div class="arranged-text">
-            <%= simple_format(h(@micropost.detail), {class: "photo-text"}) %>
-          </div>
-        <% end %>
+        <div class="arranged-text">
+          <%= simple_format(h(@micropost.detail), {class: "photo-text"}) %>
+        </div>
         <div class="good-btn " id="like_<%= @micropost.id %>">
           <%= render "likes/like", micropost: @micropost %>
         </div>
@@ -24,20 +22,20 @@
         <% if @micropost.latitude && @micropost.longitude %><%# もし@micropostインスタンスが緯度と経度の値を持っていたら %>
           <div id="show_map" class="show-map-location" style="height: 400px; width: 500px;"></div>
           <script>
-            var marker
-            var map_lat
-            var map_lng
-            var map_result
-            var myLatLng
+            let marker
+            let map_lat
+            let map_lng
+            let map_result
+            let myLatLng
             let map
             let geocoder
 
             function initMap(){
               geocoder = new google.maps.Geocoder()
               if(document.getElementById('map')){ //新規投稿で表示する地図
-                myLatLng = {lat: 35.676192, lng: 139.650311}
+                myLatLng = {lat: 35.676192, lng: 139.650311} //デフォルトは「東京都」に設定
                 map_lat = document.getElementById('micropost_latitude')
-                map_lng = document.getElementById('micropost_longitude')
+                map_lng = document.getElementById('micropost_longitude');
 
                 map = new google.maps.Map(document.getElementById('map'),{
                   center: myLatLng,
@@ -50,12 +48,11 @@
             function mylistener(event){ //地図クリック時の処理内容
               marker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
               marker.setMap(map);
-              console.log(event.latLng.lat(), event.latLng.lng());
               map_lat.value = event.latLng.lat(); //クリックした場所の緯度をデータベース保存用の値にする
               map_lng.value = event.latLng.lng(); //クリックした場所の経度をデータベース保存用の値にする
             }
 
-              }else{ //投稿詳細で表示する地図
+              }else if(document.getElementById('show_map')){ //投稿詳細で表示する地図
                 myLatLng = {lat: gon.lat, lng: gon.lng} //データベースの緯度・経度
                 map = new google.maps.Map(document.getElementById('show_map'),{
                   center: myLatLng,
@@ -65,6 +62,27 @@
                   position: myLatLng, //データベースの緯度・経度
                   map: map
                 });
+              }else{
+                myLatLng = {lat: gon.lat, lng: gon.lng} //データベースの緯度・経度
+                map_lat = gon.lat
+                map_lng = gon.lng
+                map = new google.maps.Map(document.getElementById('edit_map'),{
+                  center: myLatLng,
+                  zoom: 15,
+                });
+                marker = new google.maps.Marker({ //編集前の情報からマーカーを表示させる
+                  position: myLatLng, //データベースの緯度・経度
+                  map: map
+                });
+
+                google.maps.event.addListener(map, 'click', mylistener); //地図クリック時の処理実行
+
+                function mylistener(event){ //地図クリック時の処理内容
+                  marker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
+                  marker.setMap(map);
+                  map_lat.value = event.latLng.lat(); //クリックした場所の緯度をデータベース保存用の値にする
+                  map_lng.value = event.latLng.lng(); //クリックした場所の経度をデータベース保存用の値にする
+                }
               }
             }
 
@@ -88,7 +106,6 @@
                   map_lng.value = map_result.lng();
                   marker.setPosition(new google.maps.LatLng(map_result.lat(), map_result.lng()));
                   marker.setMap(map);
-                  console.log(map_lat.value, map_lng.value);
                 }else{
                   alert('該当する結果がありませんでした');
                   initMap();
@@ -97,7 +114,7 @@
             }
           </script>
           <% if @micropost.address %><%# もし住所が入力されていれば %>
-            <div class="arranged-text">
+            <div class="arranged-address-text">
               <p class="adress-text mt-2">場所：<%= @micropost.address %></p>
             </div>
           <% end %>

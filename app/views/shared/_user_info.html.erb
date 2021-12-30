@@ -8,8 +8,8 @@
     <%= link_to user do %>
       <%= image_tag "default.jpeg", size: "120x120", class: "rounded-circle" %>
     <% end %>
-    <h5 class="my-4"><%= user.name %></h5>
   <% end %>
+  <h5 class="my-4 font-weight-bold"><%= user.name %></h5>
   <div id="follow-stats-area">
     <%= render "shared/follow_stats", user: user %>
   </div>
