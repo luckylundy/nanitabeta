@@ -88,22 +88,44 @@ body {
 }
 
 
+/* グーグルマップ（google-maps） */
+
+.show-map-location {
+  text-align: center;
+  margin: 0 auto;
+}
+
+
 /* 文字列（String） */
 
 .arranged-text {
   text-align: center;
-}
-
-.arranged-text>p {
-  display: inline-block;
-  text-align: left;
+  margin: 0 auto;
   width: 500px;
   border: dotted 1px;
   border-top: none;
   border-bottom: none;
   border-color: black;
-  margin-bottom: 0;
 }
+
+.arranged-address-text {
+  text-align: center;
+  margin: 0 auto;
+  width: 500px;
+}
+
+.photo-text {
+  display: inline-block;
+  text-align: left;
+  width: 500px;
+}
+
+.adress-text {
+  display: inline-block;
+  text-align: left;
+  width: 500px;
+}
+
 
 /* お気に入りボタン（likes[microposts/show]） */
 

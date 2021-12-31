@@ -40,10 +40,18 @@ class MicropostsController < ApplicationController
     @user = @micropost.user
     @comments = @micropost.comments.order(created_at: :desc)
     @comment = Comment.new # コメントフォームのインスタンスはmicropost/showで作成
+    @latitude = @micropost.latitude
+    @longitude = @micropost.longitude
+    gon.lat = @latitude
+    gon.lng = @longitude
   end
 
   def edit
     @micropost = Micropost.find_by(id: params[:id])
+    @latitude = @micropost.latitude
+    @longitude = @micropost.longitude
+    gon.lat = @latitude
+    gon.lng = @longitude
   end
 
   def update
@@ -69,7 +77,7 @@ class MicropostsController < ApplicationController
   private
 
     def micropost_params
-      params.require(:micropost).permit(:photo, :detail, :tag_list).merge(user_id: current_user.id)
+      params.require(:micropost).permit(:photo, :detail, :tag_list, :address, :latitude, :longitude).merge(user_id: current_user.id)
     end
 
     def correct_user

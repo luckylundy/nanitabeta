@@ -9,7 +9,7 @@
           <p><%= image_tag "#{@micropost.photo.to_s}", size: "500x500" %></p>
         </div>
         <div class="arranged-text">
-          <%= simple_format(h(@micropost.detail)) %>
+          <%= simple_format(h(@micropost.detail), {class: "photo-text"}) %>
         </div>
         <div class="good-btn " id="like_<%= @micropost.id %>">
           <%= render "likes/like", micropost: @micropost %>
@@ -19,6 +19,106 @@
             <span class="badge badge-pill badge-info mr-2 mb-3 p-2"><%= tag %></span>
           <% end %>
         </div>
+        <% if @micropost.latitude && @micropost.longitude %><%# もし@micropostインスタンスが緯度と経度の値を持っていたら %>
+          <div id="show_map" class="show-map-location" style="height: 400px; width: 500px;"></div>
+          <script>
+            let marker
+            let map_lat
+            let map_lng
+            let map_result
+            let myLatLng
+            let map
+            let geocoder
+
+            function initMap(){
+              geocoder = new google.maps.Geocoder()
+              if(document.getElementById('map')){ //新規投稿で表示する地図
+                myLatLng = {lat: 35.676192, lng: 139.650311} //デフォルトは「東京都」に設定
+                map_lat = document.getElementById('micropost_latitude')
+                map_lng = document.getElementById('micropost_longitude');
+
+                map = new google.maps.Map(document.getElementById('map'),{
+                  center: myLatLng,
+                  zoom: 15,
+                });
+                marker = new google.maps.Marker();
+
+            google.maps.event.addListener(map, 'click', mylistener); //地図クリック時の処理実行
+
+            function mylistener(event){ //地図クリック時の処理内容
+              marker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
+              marker.setMap(map);
+              map_lat.value = event.latLng.lat(); //クリックした場所の緯度をデータベース保存用の値にする
+              map_lng.value = event.latLng.lng(); //クリックした場所の経度をデータベース保存用の値にする
+            }
+
+              }else if(document.getElementById('show_map')){ //投稿詳細で表示する地図
+                myLatLng = {lat: gon.lat, lng: gon.lng} //データベースの緯度・経度
+                map = new google.maps.Map(document.getElementById('show_map'),{
+                  center: myLatLng,
+                  zoom: 15,
+                });
+                marker = new google.maps.Marker({ //マーカーを表示するのみ
+                  position: myLatLng, //データベースの緯度・経度
+                  map: map
+                });
+              }else{
+                myLatLng = {lat: gon.lat, lng: gon.lng} //データベースの緯度・経度
+                map_lat = gon.lat
+                map_lng = gon.lng
+                map = new google.maps.Map(document.getElementById('edit_map'),{
+                  center: myLatLng,
+                  zoom: 15,
+                });
+                marker = new google.maps.Marker({ //編集前の情報からマーカーを表示させる
+                  position: myLatLng, //データベースの緯度・経度
+                  map: map
+                });
+
+                google.maps.event.addListener(map, 'click', mylistener); //地図クリック時の処理実行
+
+                function mylistener(event){ //地図クリック時の処理内容
+                  marker.setPosition(new google.maps.LatLng(event.latLng.lat(), event.latLng.lng()));
+                  marker.setMap(map);
+                  map_lat.value = event.latLng.lat(); //クリックした場所の緯度をデータベース保存用の値にする
+                  map_lng.value = event.latLng.lng(); //クリックした場所の経度をデータベース保存用の値にする
+                }
+              }
+            }
+
+            function deleteMarker(){ //マーカー削除
+              marker.setMap(null);
+              map_lat.value = "";
+              map_lng.value = "";
+            }
+
+            function codeAddress(){
+              geocoder = new google.maps.Geocoder()
+              let inputAddress = document.getElementById('address').value;
+              geocoder.geocode({
+                'address': inputAddress,
+                'region': 'jp'
+              }, function(results, status){
+                if (status == 'OK'){
+                  map.setCenter(results[0].geometry.location); //クリックした場所を中心にする
+                  map_result = results[0].geometry.location;
+                  map_lat.value = map_result.lat();
+                  map_lng.value = map_result.lng();
+                  marker.setPosition(new google.maps.LatLng(map_result.lat(), map_result.lng()));
+                  marker.setMap(map);
+                }else{
+                  alert('該当する結果がありませんでした');
+                  initMap();
+                }
+              });
+            }
+          </script>
+          <% if @micropost.address %><%# もし住所が入力されていれば %>
+            <div class="arranged-address-text">
+              <p class="adress-text mt-2">場所：<%= @micropost.address %></p>
+            </div>
+          <% end %>
+        <% end %>
         <% if current_user.id == @micropost.user.id %>
           <div class="text-center mb-2">
             <%= link_to "編集する", edit_micropost_path(@micropost), class: "btn btn-light" %>
